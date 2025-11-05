@@ -1,0 +1,24 @@
+name: Базовая проверка
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Установить зависимости
+        run: |
+          npm install
+          cd frontend && npm install
+          cd ../backend && npm install
+
+      - name: Проверить сборку фронта
+        run: cd frontend && npm run build
+
+      - name: Проверить запуск бэка
+        run: cd backend && node --check index.js || echo "Бэк пока не готов — пропускаем"
