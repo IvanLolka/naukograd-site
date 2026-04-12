@@ -1,0 +1,406 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  VISITOR
+  GUIDE
+  MANAGER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  PENDING_DELETION
+}
+
+enum TokenPurpose {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+enum ConsentKind {
+  PERSONAL_DATA
+  TERMS_OF_SERVICE
+  MARKETING
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SlotStatus {
+  OPEN
+  CLOSED
+  CANCELLED
+}
+
+enum OrderStatus {
+  CART
+  PENDING_PAYMENT
+  PAID
+  CANCELLED
+  EXPIRED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum OrderItemType {
+  EXCURSION_TICKET
+  DONATION
+  SOUVENIR
+}
+
+enum BookingStatus {
+  RESERVED
+  CONFIRMED
+  CANCELLED
+  VISITED
+  NO_SHOW
+}
+
+enum PaymentProvider {
+  YOOKASSA
+  TINKOFF
+  STRIPE
+  MANUAL
+}
+
+enum PaymentStatus {
+  CREATED
+  PENDING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum WebhookProcessingStatus {
+  RECEIVED
+  PROCESSED
+  FAILED
+}
+
+enum AuditSeverity {
+  INFO
+  WARN
+  CRITICAL
+}
+
+model User {
+  id               String          @id @default(uuid())
+  email            String
+  emailNormalized  String          @unique
+  passwordHash     String
+  role             UserRole        @default(VISITOR)
+  status           UserStatus      @default(ACTIVE)
+  isEmailVerified  Boolean         @default(false)
+  emailVerifiedAt  DateTime?
+  failedLoginCount Int             @default(0)
+  blockedUntil     DateTime?
+  lastLoginAt      DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  deletedAt        DateTime?
+  profile          UserProfile?
+  sessions         UserSession[]
+  authTokens       AuthToken[]
+  consents         Consent[]
+  orders           Order[]
+  bookings         Booking[]
+  auditLogs        AuditLog[]      @relation("audit_actor")
+  createdPages     ContentPage[]   @relation("page_creator")
+  updatedPages     ContentPage[]   @relation("page_updater")
+  guidedSlots      ExcursionSlot[] @relation("slot_guide")
+  uploadedAssets   MediaAsset[]    @relation("asset_uploader")
+
+  @@index([email])
+  @@index([status, createdAt])
+}
+
+model UserProfile {
+  id                        String   @id @default(uuid())
+  userId                    String   @unique
+  user                      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName               String?
+  phoneEncrypted            String?
+  phoneHash                 String?  @unique
+  birthDateEncrypted        String?
+  emergencyContactEncrypted String?
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@index([displayName])
+}
+
+model UserSession {
+  id                  String    @id @default(uuid())
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshTokenHash    String    @unique
+  ipHash              String?
+  userAgentHash       String?
+  expiresAt           DateTime
+  revokedAt           DateTime?
+  replacedBySessionId String?
+  createdAt           DateTime  @default(now())
+
+  @@index([userId, expiresAt])
+  @@index([revokedAt])
+}
+
+model AuthToken {
+  id         String       @id @default(uuid())
+  userId     String
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  purpose    TokenPurpose
+  tokenHash  String       @unique
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime     @default(now())
+
+  @@index([userId, purpose, expiresAt])
+}
+
+model Consent {
+  id              String      @id @default(uuid())
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind            ConsentKind
+  documentVersion String
+  acceptedAt      DateTime    @default(now())
+  ipHash          String?
+  userAgentHash   String?
+
+  @@unique([userId, kind, documentVersion])
+  @@index([kind, acceptedAt])
+}
+
+model MediaAsset {
+  id             String        @id @default(uuid())
+  storageKey     String        @unique
+  publicUrl      String?
+  mimeType       String?
+  sizeBytes      Int?
+  checksumSha256 String?
+  uploadedById   String?
+  uploadedBy     User?         @relation("asset_uploader", fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+  pages          ContentPage[]
+  exhibits       Exhibit[]
+}
+
+model ContentPage {
+  id          String        @id @default(uuid())
+  slug        String        @unique
+  title       String
+  summary     String?
+  content     Json
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+  heroImageId String?
+  heroImage   MediaAsset?   @relation(fields: [heroImageId], references: [id], onDelete: SetNull)
+  createdById String?
+  createdBy   User?         @relation("page_creator", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedById String?
+  updatedBy   User?         @relation("page_updater", fields: [updatedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+model Exhibit {
+  id            String        @id @default(uuid())
+  slug          String        @unique
+  title         String
+  teaser        String?
+  description   String
+  content       Json?
+  locationLabel String?
+  isInteractive Boolean       @default(false)
+  status        ContentStatus @default(DRAFT)
+  coverImageId  String?
+  coverImage    MediaAsset?   @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status])
+}
+
+model Excursion {
+  id               String          @id @default(uuid())
+  slug             String          @unique
+  title            String
+  shortDescription String?
+  description      String
+  durationMinutes  Int
+  basePriceCents   Int
+  currency         String          @default("RUB")
+  capacityPerSlot  Int
+  minAge           Int?
+  status           ContentStatus   @default(DRAFT)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  slots            ExcursionSlot[]
+  orderItems       OrderItem[]
+  bookings         Booking[]
+
+  @@index([status, createdAt])
+}
+
+model ExcursionSlot {
+  id            String      @id @default(uuid())
+  excursionId   String
+  excursion     Excursion   @relation(fields: [excursionId], references: [id], onDelete: Cascade)
+  guideId       String?
+  guide         User?       @relation("slot_guide", fields: [guideId], references: [id], onDelete: SetNull)
+  startsAt      DateTime
+  endsAt        DateTime
+  capacity      Int
+  reservedSeats Int         @default(0)
+  status        SlotStatus  @default(OPEN)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  orderItems    OrderItem[]
+  bookings      Booking[]
+
+  @@unique([excursionId, startsAt])
+  @@index([startsAt, status])
+  @@index([guideId, startsAt])
+}
+
+model Order {
+  id                    String      @id @default(uuid())
+  publicId              String      @unique @default(cuid())
+  userId                String?
+  user                  User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  status                OrderStatus @default(CART)
+  currency              String      @default("RUB")
+  subtotalAmountCents   Int         @default(0)
+  discountAmountCents   Int         @default(0)
+  totalAmountCents      Int         @default(0)
+  contactEmailEncrypted String?
+  contactPhoneEncrypted String?
+  expiresAt             DateTime?
+  paidAt                DateTime?
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  items                 OrderItem[]
+  payments              Payment[]
+
+  @@index([userId, status, createdAt])
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id              String         @id @default(uuid())
+  orderId         String
+  order           Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type            OrderItemType  @default(EXCURSION_TICKET)
+  titleSnapshot   String
+  quantity        Int            @default(1)
+  unitPriceCents  Int
+  totalPriceCents Int
+  excursionId     String?
+  excursion       Excursion?     @relation(fields: [excursionId], references: [id], onDelete: SetNull)
+  slotId          String?
+  slot            ExcursionSlot? @relation(fields: [slotId], references: [id], onDelete: SetNull)
+  booking         Booking?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([orderId])
+  @@index([slotId])
+}
+
+model Booking {
+  id                    String        @id @default(uuid())
+  userId                String
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+  orderItemId           String        @unique
+  orderItem             OrderItem     @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  excursionId           String
+  excursion             Excursion     @relation(fields: [excursionId], references: [id], onDelete: Restrict)
+  slotId                String
+  slot                  ExcursionSlot @relation(fields: [slotId], references: [id], onDelete: Restrict)
+  attendeesCount        Int           @default(1)
+  attendeeDataEncrypted String?
+  status                BookingStatus @default(RESERVED)
+  confirmationCodeHash  String        @unique
+  checkedInAt           DateTime?
+  cancelledAt           DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  @@index([userId, status])
+  @@index([slotId, status])
+}
+
+model Payment {
+  id                String          @id @default(uuid())
+  orderId           String
+  order             Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider          PaymentProvider
+  providerPaymentId String?
+  idempotencyKey    String?         @unique
+  status            PaymentStatus   @default(CREATED)
+  amountCents       Int
+  currency          String          @default("RUB")
+  failureCode       String?
+  failureMessage    String?
+  metadata          Json?
+  paidAt            DateTime?
+  refundedAt        DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  events            PaymentEvent[]
+
+  @@unique([provider, providerPaymentId])
+  @@index([orderId, status, createdAt])
+  @@index([provider, status])
+}
+
+model PaymentEvent {
+  id               String                  @id @default(uuid())
+  paymentId        String?
+  payment          Payment?                @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+  provider         PaymentProvider
+  providerEventId  String
+  eventType        String
+  payload          Json
+  signatureHash    String?
+  processingStatus WebhookProcessingStatus @default(RECEIVED)
+  errorMessage     String?
+  receivedAt       DateTime                @default(now())
+  processedAt      DateTime?
+
+  @@unique([provider, providerEventId])
+  @@index([processingStatus, receivedAt])
+}
+
+model AuditLog {
+  id            String        @id @default(uuid())
+  actorId       String?
+  actor         User?         @relation("audit_actor", fields: [actorId], references: [id], onDelete: SetNull)
+  action        String
+  entityType    String
+  entityId      String?
+  severity      AuditSeverity @default(INFO)
+  ipHash        String?
+  userAgentHash String?
+  details       Json?
+  createdAt     DateTime      @default(now())
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorId, createdAt])
+}
