@@ -1,0 +1,55 @@
+/* css/MobileNav.module.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobileNav {
+  width: 80%;
+  height: 100%;
+  background-color: var(--color-orange);
+  color: var(--color-light-gray);
+  padding: 30px 20px;
+  position: relative;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileNavTitle {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.navList {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--color-red);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.navListLink {
+  font-weight: 400;
+  font-size: 20px;
+  color: inherit;
+  text-decoration: none;
+  background-color: var(--color-pink);
+  border-radius: 10px;
+  padding: 10px 5px;
+}
+
+.navListLink:hover {
+  text-decoration: underline;
+}

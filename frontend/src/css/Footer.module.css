@@ -1,0 +1,76 @@
+.footer {
+  color: var(--color-light-gray);
+  background-color: var(--color-orange);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerRightBlock {
+  text-align: right;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.subSectionTitle {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: inherit;
+}
+
+.contactInfo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: inherit;
+}
+
+.emailBlock {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: inherit;
+}
+
+.emailLink {
+  color: inherit;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.emailLink:hover {
+    text-decoration: underline;
+}
+
+.socialMediaIcons {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+.socialMediaLink {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.socialMediaIcon {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+.scheduleInfo {
+  margin: 5px 0 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: inherit;
+}
