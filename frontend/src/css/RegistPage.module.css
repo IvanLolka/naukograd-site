@@ -1,0 +1,7 @@
+.AuthLink {
+    margin-top: 5px;
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--color-black);
+}

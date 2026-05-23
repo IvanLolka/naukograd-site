@@ -19,7 +19,7 @@ function Header() {
           </div>
 
           <div className={styles.headerRightBlock}>
-            <Link to="/authorization" className={styles.loginButton}>
+            <Link to="/AuthPage" className={styles.loginButton}>
               Войти
             </Link>
             <img

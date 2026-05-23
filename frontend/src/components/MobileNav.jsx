@@ -34,10 +34,9 @@ function MobileNav({ isOpen, onClose }) {
         <h2 className={styles.mobileNavTitle}>Навигация</h2>
         <nav className={styles.navList}>
           <Link className={styles.navListLink} to="/" onClick={onClose}>Главная</Link>
-          <Link className={styles.navListLink} to="/about" onClick={onClose}>О нас</Link>
-          <Link className={styles.navListLink} to="/courses" onClick={onClose}>Курсы</Link>
+          <Link className={styles.navListLink} to="/CourseCatalog" onClick={onClose}>Курсы</Link>
+          <Link className={styles.navListLink} to="/EventsCatalog" onClick={onClose}>Мероприятия</Link>
           <Link className={styles.navListLink} to="/contacts" onClick={onClose}>Личный кабинет</Link>
-          <Link className={styles.navListLink} to="/contacts" onClick={onClose}>Контакты</Link>
         </nav>
       </div>
     </div>

@@ -1,14 +1,15 @@
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/InterVariable.woff2') format('woff2-variations');
-  font-weight: 100 900;
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSansVarRoman.woff2') format('woff2-variations');
+  font-weight: 100 700;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/InterVariable-Italic.woff2') format('woff2-variations');
-  font-weight: 100 900;
+  font-family: 'IBM Plex Sans';
+  src: url('/fonts/IBMPlexSansVarItalic.woff2') format('woff2-variations');
+  font-weight: 100 700;
   font-style: italic;
   font-display: swap;
 }
@@ -20,12 +21,13 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   line-height: 1.6;
 }
 
 main {
   padding: 15px;
+  background-color: var(--color-light-gray);
 }
 
 :root {
@@ -39,4 +41,20 @@ main {
   --color-purple: #954B97;
   --color-red: #EA474E;
   --color-pink: #D33950;
+}
+
+.CardsBlock {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.margin5pxV {
+  margin: 5px 0;  
+}
+
+.margin5pxH {
+  margin: 0 5px;
 }

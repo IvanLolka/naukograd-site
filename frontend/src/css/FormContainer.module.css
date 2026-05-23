@@ -1,0 +1,51 @@
+.FormContainer {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--color-red);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+    color: var(--color-white);
+}
+
+.TitleBlock {
+    padding: 18px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-purple);
+    color: var(--color-light-gray);
+    border-radius: 10px 10px 0px 0px;
+}
+
+.Title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.Subtitle {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.FormBody {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 300;
+    /* ✅ text-decoration убран — теперь он не «протекает» на детей */
+}
+
+/* ✅ Новый класс — только для того текста, который должен быть подчёркнут */
+.FormHint {
+    text-decoration: underline;
+    text-align: center;
+    color: var(--color-light-gray);
+    cursor: pointer; /* Если это ссылка — добавь hover-эффект */
+}
+
+.FormHint:hover {
+    color: var(--color-white); /* Опционально: подсветка при наведении */
+}
