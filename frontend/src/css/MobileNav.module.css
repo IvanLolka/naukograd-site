@@ -13,6 +13,7 @@
 
 .mobileNav {
   width: 80%;
+  max-width: 500px;
   height: 100%;
   background-color: var(--color-orange);
   color: var(--color-light-gray);

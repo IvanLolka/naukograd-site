@@ -1,3 +1,21 @@
+.RegistPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+RegistWrapper
+.AuthWrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.DocumentLink {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .AuthLink {
     margin-top: 5px;
     text-decoration: underline;

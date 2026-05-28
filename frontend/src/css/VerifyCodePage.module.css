@@ -1,0 +1,12 @@
+.VerifyCodePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AgainLink {
+    cursor: pointer;
+    margin: 0 5px;
+    text-decoration: underline;
+    color: var(--color-light-gray);
+}

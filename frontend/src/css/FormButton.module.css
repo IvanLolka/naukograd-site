@@ -7,4 +7,9 @@
     color: var(--color-light-gray);
     font-size: 20px;
     font-weight: 500;
+    cursor: pointer;
+}
+
+.FormButton:hover {
+    background-color: var(--color-blue-hover);
 }

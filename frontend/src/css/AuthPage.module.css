@@ -1,6 +1,21 @@
+.AuthPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AuthWrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
 .ForgotLink {
+    cursor: pointer;
     margin: 0 5px;
     text-decoration: underline;
+    color: var(--color-light-gray);
 }
 
 .RegistLink {

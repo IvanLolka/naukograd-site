@@ -2,6 +2,7 @@
   color: var(--color-light-gray);
   background-color: var(--color-orange);
   padding: 15px;
+  height: 45vh;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

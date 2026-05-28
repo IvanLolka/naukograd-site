@@ -8,6 +8,8 @@ import EventsCatalog from './pages/EventsCatalog';
 import TestPage from './pages/TestPage';
 import AuthPage from './pages/AuthPage';
 import RegistPage from './pages/RegistPage';
+import SetNewPasswordPage from './pages/SetNewPasswordPage';
+import VerifyCodePage from './pages/VerifyCodePage'
 
 function AppContent() {
   return (
@@ -20,6 +22,8 @@ function AppContent() {
           <Route path="/AuthPage" element={<AuthPage />} />
           <Route path="/RegistPage" element={<RegistPage />} />
           <Route path="/TestPage" element={<TestPage />} />
+          <Route path="/SetNewPasswordPage" element={<SetNewPasswordPage />} />
+          <Route path="/VerifyCodePage" element={<VerifyCodePage />} />
           <Route path="*" element={<div>Страница не найдена</div>} />
         </Routes>
       <Footer />

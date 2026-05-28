@@ -3,10 +3,16 @@
     flex-direction: column;
     max-height: 130px;
     width: 100%;
+    max-width: 200px;
     padding: 10px;
     gap: 10px;
     background-color: var(--color-white);
     border-radius: 6px;
+    cursor: pointer;
+}
+
+.Card:hover {
+    text-decoration: underline;
 }
 
 .CardIcon {

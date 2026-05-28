@@ -58,3 +58,12 @@ main {
 .margin5pxH {
   margin: 0 5px;
 }
+
+@media (min-width: 1024px) {
+  main {
+    padding: 20px 100px;
+  }
+  .CardsBlock {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+  }
+}
