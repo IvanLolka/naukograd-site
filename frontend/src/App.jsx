@@ -13,6 +13,8 @@ import Error404Page from './pages/Error404Page';
 import BookingPage from './pages/BookingPage';
 import PersonalAccount from './pages/PersonalAccount';
 import PaymentPage from './pages/PaymentPage';
+import AdminView from './pages/AdminView';
+import AdminRedact from './pages/AdminRedact';
 
 function AppContent() {
   return (
@@ -29,6 +31,8 @@ function AppContent() {
           <Route path="/BookingPage" element={<BookingPage />} />
           <Route path="/PersonalAccount" element={<PersonalAccount />} />
           <Route path="/PaymentPage" element={<PaymentPage />} />
+          <Route path="/AdminView" element={<AdminView />} />
+          <Route path="/AdminRedact" element={<AdminRedact />} />
           <Route path="*" element={<Error404Page />} />
         </Routes>
       <Footer />

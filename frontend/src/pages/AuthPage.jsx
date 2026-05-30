@@ -10,7 +10,7 @@ function AuthPage() {
                 <FormContainer title="Авторизация" subtitle="Введите данные">
                     <FormField label="Почта:" type="email" />
                     <FormField label="Пароль:" type="password" />
-                    <a href="/VerifyCodePage" className={styles.ForgotLink}>Забыли пароль?</a>
+                    <a href="/SetNewPasswordPage" className={styles.ForgotLink}>Забыли пароль?</a>
                     <FormButton>Войти</FormButton>
                 </FormContainer>
                 
