@@ -9,6 +9,8 @@ function RegistPage() {
         <main className={styles.RegistPage}>
             <div className={styles.RegistWrapper}>
                 <FormContainer title="Регистрация" subtitle="Введите данные">
+                    <FormField label="ФИО родителя:" type="text" />
+                    <FormField label="Телефон:" type="tel" />
                     <FormField label="Почта:" type="email" />
                     <FormField label="Пароль:" type="password" />
                     <FormField label="Повторите пароль:" type="password" />

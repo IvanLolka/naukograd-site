@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: center;
 }
-RegistWrapper
-.AuthWrapper {
+
+.RegistWrapper {
   width: 100%;
   max-width: 500px;
   display: flex;

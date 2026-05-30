@@ -36,7 +36,7 @@ function MobileNav({ isOpen, onClose }) {
           <Link className={styles.navListLink} to="/" onClick={onClose}>Главная</Link>
           <Link className={styles.navListLink} to="/CourseCatalog" onClick={onClose}>Курсы</Link>
           <Link className={styles.navListLink} to="/EventsCatalog" onClick={onClose}>Мероприятия</Link>
-          <Link className={styles.navListLink} to="/contacts" onClick={onClose}>Личный кабинет</Link>
+          <Link className={styles.navListLink} to="/PersonalAccount" onClick={onClose}>Личный кабинет</Link>
         </nav>
       </div>
     </div>

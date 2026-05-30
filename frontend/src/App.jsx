@@ -9,7 +9,10 @@ import TestPage from './pages/TestPage';
 import AuthPage from './pages/AuthPage';
 import RegistPage from './pages/RegistPage';
 import SetNewPasswordPage from './pages/SetNewPasswordPage';
-import VerifyCodePage from './pages/VerifyCodePage'
+import Error404Page from './pages/Error404Page';
+import BookingPage from './pages/BookingPage';
+import PersonalAccount from './pages/PersonalAccount';
+import PaymentPage from './pages/PaymentPage';
 
 function AppContent() {
   return (
@@ -23,8 +26,10 @@ function AppContent() {
           <Route path="/RegistPage" element={<RegistPage />} />
           <Route path="/TestPage" element={<TestPage />} />
           <Route path="/SetNewPasswordPage" element={<SetNewPasswordPage />} />
-          <Route path="/VerifyCodePage" element={<VerifyCodePage />} />
-          <Route path="*" element={<div>Страница не найдена</div>} />
+          <Route path="/BookingPage" element={<BookingPage />} />
+          <Route path="/PersonalAccount" element={<PersonalAccount />} />
+          <Route path="/PaymentPage" element={<PaymentPage />} />
+          <Route path="*" element={<Error404Page />} />
         </Routes>
       <Footer />
     </>

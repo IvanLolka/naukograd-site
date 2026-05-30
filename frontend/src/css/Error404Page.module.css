@@ -1,0 +1,33 @@
+.Error404Main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50vh;
+}
+
+.Error404Par {
+    text-align: center;
+}
+
+.LinkWrapper {
+    display: block;
+    width: 100%;
+    max-width: 344px;
+}
+
+.ReturnButton {
+    width: 100%;
+    max-width: 344px;
+    padding: 12px 0;
+    border-radius: 10px;
+    border-width: 0;
+    background-color: var(--color-blue);
+    color: var(--color-light-gray);
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.FormButton:hover {
+    background-color: var(--color-blue-hover);
+}
