@@ -4,6 +4,23 @@
   align-items: center;
   min-height: 60vh;
   height: max-content;
+  gap: 10px;
+}
+
+.AdminRedactTitle {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.Form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.SectionTitle {
+    font-size: 18px;
+    font-weight: 500 ;
 }
 
 .Block {
@@ -12,22 +29,110 @@
     padding: 5px;
 }
 
+.OneBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .Fields {
     display: flex;
     flex-direction: column;
     background-color: var(--color-red);
     border-radius: 5px;
-    padding: 5px;
     gap: 5px;
+    padding: 5px;
 }
 
 .Input {
+    border-width: 0;
+    border-radius: 5px;
     width: 100%;
     padding: 5px;
+    outline: none;
 }
 
 .Textarea {
+    border-width: 0;
+    border-radius: 5px;
     field-sizing: content;
     width: 100%;
     padding: 5px;
+    outline: none;
+}
+
+.FlexLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Addbutton {
+    color: var(--color-blue);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.DeleteSaveButton {
+    background-color: var(--color-blue);
+    border-radius: 10px;
+    border-width: 0;
+    color: var(--color-white);
+    padding: 10px 5px;
+    cursor: pointer;
+}
+
+.DeleteSaveButton:hover {
+    background-color: var(--color-blue-hover);
+}
+
+/* Состояния загрузки и ошибок */
+.Loading,
+.Empty {
+  text-align: center;
+  padding: 20px;
+  color: var(--color-gray);
+  font-style: italic;
+}
+
+.Error {
+  color: var(--color-error, #d32f2f);
+  padding: 15px;
+  background: #ffebee;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Кнопка сохранения всех изменений */
+.SaveAllButton {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.2s;
+}
+
+.SaveAllButton:hover:not(:disabled) {
+  background-color: var(--color-blue-hover);
+}
+
+.SaveAllButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Контейнер для кнопок действий */
+.Actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Убираем дубликаты кнопок "Удалить" */
+.Fields .DeleteSaveButton {
+  margin-top: 5px;
 }

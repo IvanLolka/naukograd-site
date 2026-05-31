@@ -60,6 +60,53 @@ main {
   margin: 0 5px;
 }
 
+.CatalogSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 15px;
+  background-color: var(--color-white);
+  border-radius: 10px;
+}
+
+.CatalogSectionTitle {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.PriceButtonBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.PriceLine {
+  display: flex;
+  gap: 5px;
+}
+
+.CatalogSectionButton {
+  display: inline-block; /* Позволяет корректно применять padding и margin */
+  padding: 10px 5px;
+  border: none;          /* Более современный аналог border-width: 0 */
+  border-radius: 10px;
+  background-color: var(--color-blue);
+  color: var(--color-light-gray);
+  cursor: pointer;
+  text-decoration: none; /* Убирает стандартное подчёркивание ссылки */
+  font: inherit;         /* Наследует шрифт, размер и вес от родителя */
+  text-align: center;
+  line-height: 1.2;      /* Вертикальное центрирование текста */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-sizing: border-box;
+}
+
+.CatalogSectionButton:hover {
+  background-color: var(--color-blue-hover);
+  color: var(--color-light-gray);
+}
+
 @media (min-width: 1024px) {
   main {
     padding: 20px 100px;
