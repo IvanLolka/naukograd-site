@@ -153,3 +153,264 @@
 .Blue:hover {
     background-color: var(--color-blue-hover);
 }
+
+/* ... ваши существующие стили ... */
+
+.ChildrenDataLine {
+  display: flex;
+  gap: 5px;
+  align-items: center; /* Выравнивание инпутов и текста по центру */
+}
+
+/* Стили полей ввода */
+.InputField {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: 5px;
+  font-size: 16px;
+  background: var(--color-white);
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.InputFieldSmall {
+  width: 45px;
+  padding: 6px;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+  background: var(--color-white);
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.InputFieldSchool {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: 4px;
+  font-size: 12px;
+  background: var(--color-white);
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.InputField:focus,
+.InputFieldSmall:focus,
+.InputFieldSchool:focus {
+  border-color: var(--color-orange);
+}
+
+/* Кнопки редактирования */
+.EditActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.SmallButton {
+  padding: 10px 16px;
+  font-size: 14px;
+  width: auto;
+}
+
+.Blue {
+  background-color: var(--color-blue);
+}
+
+.Blue:hover {
+  background-color: var(--color-blue-hover);
+}
+
+/* Сообщение об успехе */
+.SaveMessage {
+  color: #4CAF50;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.Button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ... ваши существующие стили ... */
+
+/* Контейнер действий: Добавить | Изменить */
+.ChildrenActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ChildrenAddButton {
+  text-decoration: underline;
+  color: var(--color-orange);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.ChildrenAddButton:hover {
+  color: var(--color-orange-hover);
+}
+
+.ActionsSeparator {
+  color: var(--color-light-gray);
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* Ссылка редактирования внутри карточки ребёнка */
+.ChildEditLink {
+  margin-top: 8px;
+  text-align: right;
+}
+
+.EditInline {
+  font-size: 12px;
+  color: var(--color-blue);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.EditInline:hover {
+  color: var(--color-blue-hover);
+}
+
+/* Стили полей ввода */
+.ChildrenDataLine {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.InputField {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: 5px;
+  font-size: 16px;
+  background: var(--color-white);
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.InputField::placeholder {
+  color: #999;
+}
+
+.InputFieldSmall {
+  width: 45px;
+  padding: 6px;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: 4px;
+  font-size: 12px;
+  text-align: center;
+  background: var(--color-white);
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.InputFieldSmall::placeholder {
+  color: #999;
+}
+
+.InputFieldSchool {
+  flex: 1;
+  min-width: 100px;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border, #ccc);
+  border-radius: 4px;
+  font-size: 12px;
+  background: var(--color-white);
+  color: #333;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.InputFieldSchool::placeholder {
+  color: #999;
+}
+
+.InputField:focus,
+.InputFieldSmall:focus,
+.InputFieldSchool:focus {
+  border-color: var(--color-orange);
+}
+
+/* Кнопки редактирования/добавления */
+.EditActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.SmallButton {
+  padding: 10px 16px;
+  font-size: 14px;
+  width: auto;
+  min-width: 100px;
+}
+
+/* Сообщение об успехе/ошибке */
+.SaveMessage {
+  color: #4CAF50;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.SaveMessage.error {
+  color: #f44336;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Состояния кнопок */
+.Button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Адаптив для маленьких экранов */
+@media (max-width: 400px) {
+  .ChildrenActions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  
+  .ActionsSeparator {
+    display: none;
+  }
+  
+  .ChildrenDataLine {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .InputFieldSmall {
+    width: 100%;
+    max-width: 80px;
+  }
+}

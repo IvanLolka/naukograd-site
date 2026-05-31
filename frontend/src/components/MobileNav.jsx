@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from '../css/MobileNav.module.css';
 
 // 🔹 ТЕСТОВАЯ ПЕРЕМЕННАЯ — переключайте для проверки
-const TEST_IS_ADMIN = true;
+const TEST_IS_ADMIN = false;
 
 function MobileNav({ isOpen, onClose }) {
   // 🔹 В реальном проекте: брать из контекста аутентификации

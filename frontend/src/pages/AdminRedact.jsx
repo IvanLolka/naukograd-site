@@ -2,9 +2,21 @@
 import { useState, useEffect } from 'react';
 import styles from '../css/AdminRedact.module.css';
 
+// === КОНСТАНТЫ: ИКОНКИ ===
+const ICON_OPTIONS = [
+  { label: 'мозг', value: '/icons/Brain.svg' },
+  { label: 'кисточка', value: '/icons/Brush.svg' },
+  { label: 'земля', value: '/icons/Earth.svg' },
+  { label: 'шестерня', value: '/icons/Gear.svg' },
+  { label: 'лист', value: '/icons/Leaf.svg' },
+  { label: 'лампочка', value: '/icons/Light bulb.svg' },
+  { label: 'лупа', value: '/icons/Magnifier.svg' },
+  { label: 'фото', value: '/icons/Photo.svg' },
+  { label: 'монитор', value: '/icons/Screen.svg' }
+];
+
 // === MOCK API (имитация бэкенда) ===
 const mockAPI = {
-  // Получение данных
   fetchData: () => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -13,33 +25,34 @@ const mockAPI = {
             {
               id: 1,
               title: 'Учебный день',
-              description: `· Длительность 4 академических часа\n\n· Экскурсия по музею "Авиация и космонавтика"\n\n· Профориентационный мастер-класс\n\n• 2 профильных мастер-класса по 45 минут на выбор`
+              description: `· Длительность 4 академических часа\n\n· Экскурсия по музею "Авиация и космонавтика"\n\n· Профориентационный мастер-класс\n\n• 2 профильных мастер-класса по 45 минут на выбор`,
+              icon: '/icons/Brain.svg'  // ← путь из БД
             },
             {
               id: 2,
               title: 'Открытая лекция',
-              description: '· Введение в IT-профессии\n· Практикум по основам программирования'
+              description: '· Введение в IT-профессии\n· Практикум по основам программирования',
+              icon: '/icons/Light bulb.svg'
             }
           ],
           courses: [
             {
               id: 101,
               title: 'Основы аэродинамики',
-              description: 'Курс для начинающих: теория полёта, расчёт траекторий, практические задачи'
+              description: 'Курс для начинающих: теория полёта, расчёт траекторий, практические задачи',
+              icon: '/icons/Earth.svg'
             }
           ]
         });
-      }, 800); // имитация задержки сети
+      }, 800);
     });
   },
 
-  // Сохранение изменений
   saveData: async (type, items) => {
     console.log(`[API] Сохраняем ${type} в БД:`, items);
     return new Promise(resolve => setTimeout(resolve, 500));
   },
 
-  // Удаление элемента
   deleteItem: async (type, id) => {
     console.log(`[API] Удаляем ${type} с id=${id}`);
     return new Promise(resolve => setTimeout(resolve, 300));
@@ -47,14 +60,13 @@ const mockAPI = {
 };
 
 function AdminRedact() {
-  // === STATE ===
   const [events, setEvents] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  // === ЗАГРУЗКА ДАННЫХ ПРИ МОНТАЖЕ ===
+  // Загрузка данных
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -73,7 +85,7 @@ function AdminRedact() {
     loadData();
   }, []);
 
-  // === ОБРАБОТЧИКИ ИЗМЕНЕНИЙ ===
+  // Обработчики изменений
   const handleEventChange = (id, field, value) => {
     setEvents(prev => prev.map(item => 
       item.id === id ? { ...item, [field]: value } : item
@@ -86,12 +98,13 @@ function AdminRedact() {
     ));
   };
 
-  // === CRUD ОПЕРАЦИИ ===
+  // CRUD операции
   const handleAddEvent = () => {
     const newEvent = {
       id: Date.now(),
       title: '',
-      description: ''
+      description: '',
+      icon: ICON_OPTIONS[0].value  // ← дефолтная иконка
     };
     setEvents(prev => [...prev, newEvent]);
   };
@@ -100,7 +113,8 @@ function AdminRedact() {
     const newCourse = {
       id: Date.now(),
       title: '',
-      description: ''
+      description: '',
+      icon: ICON_OPTIONS[0].value  // ← дефолтная иконка
     };
     setCourses(prev => [...prev, newCourse]);
   };
@@ -125,7 +139,7 @@ function AdminRedact() {
     }
   };
 
-  // === ОТПРАВКА ФОРМЫ ===
+  // Отправка формы
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -142,7 +156,7 @@ function AdminRedact() {
     }
   };
 
-  // === LOADING / ERROR UI ===
+  // Loading / Error UI
   if (loading) {
     return (
       <main className={styles.AdminRedact}>
@@ -159,7 +173,7 @@ function AdminRedact() {
     );
   }
 
-  // === RENDER ===
+  // Render
   return (
     <main className={styles.AdminRedact}>
       <div className={styles.AdminRedactWrapper}>
@@ -167,7 +181,7 @@ function AdminRedact() {
         
         <form className={styles.Form} onSubmit={handleSubmit}>
           
-          {/* === БЛОК: МЕРОПРИЯТИЯ === */}
+          {/* БЛОК: МЕРОПРИЯТИЯ */}
           <section className={styles.Block}>
             <div>
               <div className={styles.FlexLine}>
@@ -178,6 +192,19 @@ function AdminRedact() {
               <div className={styles.OneBlock}>
                 {events.map(event => (
                   <div key={event.id} className={styles.Fields}>
+                    {/* ← ВЫБОР ИКОНКИ */}
+                    <select
+                      value={event.icon}
+                      onChange={(e) => handleEventChange(event.id, 'icon', e.target.value)}
+                      className={styles.Select}
+                    >
+                      {ICON_OPTIONS.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+
                     <input
                       type="text"
                       value={event.title}
@@ -210,7 +237,7 @@ function AdminRedact() {
             </div>
           </section>
 
-          {/* === БЛОК: КУРСЫ === */}
+          {/* БЛОК: КУРСЫ */}
           <section className={styles.Block}>
             <div>
               <div className={styles.FlexLine}>
@@ -221,6 +248,19 @@ function AdminRedact() {
               <div className={styles.OneBlock}>
                 {courses.map(course => (
                   <div key={course.id} className={styles.Fields}>
+                    {/* ← ВЫБОР ИКОНКИ */}
+                    <select
+                      value={course.icon}
+                      onChange={(e) => handleCourseChange(course.id, 'icon', e.target.value)}
+                      className={styles.Select}
+                    >
+                      {ICON_OPTIONS.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+
                     <input
                       type="text"
                       value={course.title}
@@ -253,7 +293,7 @@ function AdminRedact() {
             </div>
           </section>
 
-          {/* === КНОПКА СОХРАНЕНИЯ === */}
+          {/* КНОПКА СОХРАНЕНИЯ */}
           <button 
             type="submit" 
             className={styles.SaveAllButton}

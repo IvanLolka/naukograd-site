@@ -28,6 +28,8 @@ body {
 main {
   padding: 15px;
   background-color: var(--color-light-gray);
+  min-height: 60vh;
+  height: max-content;
 }
 
 :root {
